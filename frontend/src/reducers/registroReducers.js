@@ -20,10 +20,6 @@ const {
 	REGISTRO_CATEGORY_LIST_REQUEST,
 	REGISTRO_CATEGORY_LIST_SUCCESS,
 	REGISTRO_CATEGORY_LIST_FAIL,
-	REGISTRO_BYCODE_REQUEST,
-	REGISTRO_BYCODE_SUCCESS,
-	REGISTRO_BYCODE_FAIL,
-	REGISTRO_BYCODE_RESET,
 } = require('../constants/registroConstants');
 
 export const registroCreateReducer = (state = {}, action) => {
@@ -115,21 +111,6 @@ export const registroDeleteReducer = (state = {}, action) => {
 			return { loading: false, error: action.payload };
 		case REGISTRO_DELETE_RESET:
 			return {};
-		default:
-			return state;
-	}
-};
-
-export const getRegistrobyCodeReducer = (state = { loading: true }, action) => {
-	switch (action.type) {
-		case REGISTRO_BYCODE_REQUEST:
-			return { loading: true };
-		case REGISTRO_BYCODE_SUCCESS:
-			return { loading: false, success: true, registroo: action.payload };
-		case REGISTRO_BYCODE_FAIL:
-			return { loading: false, error: action.payload };
-		case REGISTRO_BYCODE_RESET:
-			return { error: false, registro: {} };
 		default:
 			return state;
 	}

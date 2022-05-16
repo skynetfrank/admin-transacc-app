@@ -2083,6 +2083,22 @@ button.primary.noMargin {
 	margin-bottom: 10px;
 }
 
+section {
+	padding-left: 250px;
+}
+.fc .fc-toolbar {
+	justify-content: flex-start !important;
+	gap: 200px;
+}
+
+.fc .fc-scrollgrid-liquid {
+	height: 480px !important;
+}
+
+.fc .fc-scrollgrid {
+	width: 750px !important;
+}
+
 @media (max-width: 575px) {
 	main {
 		max-width: 375px;

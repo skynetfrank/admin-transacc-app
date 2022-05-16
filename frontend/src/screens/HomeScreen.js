@@ -30,9 +30,11 @@ function HomeScreen() {
 							<Link to={`/registrolist`}>
 								<FontAwesomeIcon icon={faTableList} />
 							</Link>
-							<Link to={`/`}>
-								<FontAwesomeIcon icon={faTrashAlt} />
-							</Link>
+							<Tooltip position='bottom' content='Calendario'>
+								<Link to={'/calendario'}>
+									<FontAwesomeIcon icon={faCalendarAlt} />
+								</Link>
+							</Tooltip>
 						</div>
 					</div>
 					<div className='card'>

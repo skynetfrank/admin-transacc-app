@@ -18,9 +18,6 @@ import {
 	REGISTRO_CATEGORY_LIST_SUCCESS,
 	REGISTRO_CATEGORY_LIST_REQUEST,
 	REGISTRO_CATEGORY_LIST_FAIL,
-	REGISTRO_BYCODE_REQUEST,
-	REGISTRO_BYCODE_SUCCESS,
-	REGISTRO_BYCODE_FAIL,
 } from '../constants/registroConstants';
 
 export const listRegistros =
@@ -76,7 +73,6 @@ export const createRegistro =
 		tipooperacion,
 		tipodoc,
 		categoria,
-		subcategoria,
 		descripcion,
 		montobs,
 		montousd,
@@ -97,7 +93,6 @@ export const createRegistro =
 					tipooperacion,
 					tipodoc,
 					categoria,
-					subcategoria,
 					descripcion,
 					montobs,
 					montousd,
@@ -162,23 +157,5 @@ export const deleteRegistro = (registroId) => async (dispatch, getState) => {
 				? error.response.data.message
 				: error.message;
 		dispatch({ type: REGISTRO_DELETE_FAIL, payload: message });
-	}
-};
-
-export const getRegistroByCode = (codigo) => async (dispatch) => {
-	dispatch({ type: REGISTRO_BYCODE_REQUEST, payload: codigo });
-	try {
-		const { data } = await Axios.get(
-			`/api/registros/encontrar?codigo=${codigo}`
-		);
-		dispatch({ type: REGISTRO_BYCODE_SUCCESS, payload: data });
-	} catch (error) {
-		dispatch({
-			type: REGISTRO_BYCODE_FAIL,
-			payload:
-				error.response && error.response.data.message
-					? error.response.data.message
-					: error.message,
-		});
 	}
 };

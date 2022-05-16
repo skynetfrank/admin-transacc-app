@@ -34,6 +34,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import CambioDiaScreen from './screens/CambioDiaScreen';
 import DashboardScreen from './screens/DashboardScreen';
 import RegistroListScreen from './screens/RegistroListScreen';
+import Calendario from './components/Calendario';
 
 function App() {
 	const cart = useSelector((state) => state.cart);
@@ -91,6 +92,7 @@ function App() {
 					<Routes>
 						<Route path='/administrador' element={<AdminScreen />}></Route>
 						<Route path='/dashboard' element={<DashboardScreen />}></Route>
+						<Route path='/calendario' element={<Calendario />}></Route>
 						<Route path='/cart' element={<CartScreen />}></Route>
 						<Route path='/cart/:id' element={<CartScreen />}></Route>
 

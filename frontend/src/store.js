@@ -8,7 +8,6 @@ import {
 	registroDetailsReducer,
 	registroListReducer,
 	registroUpdateReducer,
-	getRegistrobyCodeReducer,
 } from './reducers/registroReducers';
 
 import {
@@ -75,7 +74,6 @@ const reducer = combineReducers({
 	registroCreate: registroCreateReducer,
 	registroUpdate: registroUpdateReducer,
 	registroDelete: registroDeleteReducer,
-	registrobyCode: getRegistrobyCodeReducer,
 	registroCategoryList: registroCategoryListReducer,
 
 	cart: cartReducer,

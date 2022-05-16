@@ -79,10 +79,8 @@ export default function RegistroListScreen(props) {
 		if (successDelete) {
 			dispatch({ type: REGISTRO_DELETE_RESET });
 		}
-		dispatch(
-			listRegistros({ seller: sellerMode ? userInfo._id : '', pageNumber })
-		);
-	}, [dispatch, navigate, sellerMode, successDelete, userInfo._id, pageNumber]);
+		dispatch(listRegistros({ pageNumber }));
+	}, [dispatch, navigate, successDelete, pageNumber]);
 
 	const deleteHandler = (registro) => {
 		if (window.confirm('Esta Seguro de Eliminar Este Producto?')) {
@@ -132,7 +130,7 @@ export default function RegistroListScreen(props) {
 		const items = valor.map((v) => v.value + ' ');
 		return items;
 	};
-
+	console.log('registros', registros, 'loading', loading, 'error', error);
 	return (
 		<div>
 			<div className='row'>

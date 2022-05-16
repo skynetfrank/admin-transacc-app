@@ -10,10 +10,7 @@ import LoadingBox from '../components/LoadingBox';
 import { REGISTRO_UPDATE_RESET } from '../constants/registroConstants';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import Select from 'react-select';
 import { selectTipoDoc } from '../constants/selectsData';
-import { PROVEEDOR_LIST_RESET } from '../constants/proveedorConstants';
-import { listProveedores } from '../actions/proveedorActions';
 
 export default function RegistroEditScreen(props) {
 	const params = useParams();
@@ -25,7 +22,6 @@ export default function RegistroEditScreen(props) {
 	const [tipooperacion, setTipooperacion] = useState('egreso');
 	const [tipodoc, setTipodoc] = useState('Factura');
 	const [categoria, setCategoria] = useState('');
-	const [subcategoria, setSubcategoria] = useState('');
 	const [descripcion, setDescripcion] = useState('');
 	const [montobs, setMontobs] = useState(0);
 	const [montousd, setMontousd] = useState(0);
@@ -45,14 +41,7 @@ export default function RegistroEditScreen(props) {
 		success: successUpdate,
 	} = registroUpdate;
 
-	const proveedorList = useSelector((state) => state.proveedorList);
-	const { proveedores } = proveedorList;
-
 	const dispatch = useDispatch();
-
-	useEffect(() => {
-		dispatch(listProveedores());
-	}, []);
 
 	useEffect(() => {
 		const fetchCambio = async () => {
@@ -83,8 +72,8 @@ export default function RegistroEditScreen(props) {
 			setFecha(registro.fecha || ' ');
 			setReferencia(registro.referencia || ' ');
 			setTipooperacion(registro.tipooperacion || ' ');
+			setTipodoc(registro.tipodoc || ' ');
 			setCategoria(registro.categoria || ' ');
-			setSubcategoria(registro.subcategoria || ' ');
 			setDescripcion(registro.descripcion || ' ');
 			setMontobs(registro.montobs || ' ');
 			setMontousd(registro.montousd || ' ');
@@ -104,7 +93,6 @@ export default function RegistroEditScreen(props) {
 				tipooperacion,
 				tipodoc,
 				categoria,
-				subcategoria,
 				descripcion,
 				montobs,
 				montousd,

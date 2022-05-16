@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import path from 'path';
 import productRouter from './routers/productRouter.js';
+import registroRouter from './routers/registroRouter.js';
 import proveedorRouter from './routers/proveedorRouter.js';
 import userRouter from './routers/userRouter.js';
 import vendedorRouter from './routers/vendedorRouter.js';
@@ -26,6 +27,7 @@ mongoose
 
 app.use('/api/users', userRouter);
 app.use('/api/productos', productRouter);
+app.use('/api/registros', registroRouter);
 app.use('/api/orders', orderRouter);
 app.use('/api/cotizaciones', cotizacionRouter);
 app.use('/api/vendedores', vendedorRouter);

@@ -5,9 +5,8 @@ import { createRegistro } from '../actions/registroActions';
 import LoadingBox from '../components/LoadingBox';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import Select from 'react-select';
 import { REGISTRO_CREATE_RESET } from '../constants/registroConstants';
-import { selectTipoDoc, selectVehiculos } from '../constants/selectsData';
+import { selectTipoDoc } from '../constants/selectsData';
 
 import { listProveedores } from '../actions/proveedorActions';
 
@@ -17,7 +16,6 @@ export default function RegistroCreateScreen(props) {
 	const [tipooperacion, setTipooperacion] = useState('egreso');
 	const [tipodoc, setTipodoc] = useState('Factura');
 	const [categoria, setCategoria] = useState('');
-	const [subcategoria, setSubcategoria] = useState('');
 	const [descripcion, setDescripcion] = useState('');
 	const [montobs, setMontobs] = useState(0);
 	const [montousd, setMontousd] = useState(0);
@@ -28,8 +26,6 @@ export default function RegistroCreateScreen(props) {
 
 	const [loadingUpload, setLoadingUpload] = useState(false);
 	const [errorUpload, setErrorUpload] = useState('');
-
-	const [proveedores, setProveedores] = useState([]);
 
 	const userSignin = useSelector((state) => state.userSignin);
 	const { userInfo } = userSignin;
@@ -57,31 +53,6 @@ export default function RegistroCreateScreen(props) {
 		};
 	}, []);
 
-	useEffect(() => {
-		const prov = async () => {
-			try {
-				const { data } = await Axios.get('/api/proveedores', {
-					headers: {
-						Authorization: `Bearer ${userInfo.token}`,
-					},
-				});
-
-				let nombres = data.map((x) => x.nombre);
-				console.log('data proveedores', nombres);
-				nombres.unshift(' ');
-				setProveedores(nombres);
-			} catch (error) {
-				console.log('Error al cargar proveedores', error);
-			}
-		};
-
-		prov();
-	}, []);
-
-	useEffect(() => {
-		dispatch(listProveedores());
-	}, [dispatch]);
-
 	const submitHandler = (e) => {
 		e.preventDefault();
 
@@ -92,7 +63,6 @@ export default function RegistroCreateScreen(props) {
 				tipooperacion,
 				tipodoc,
 				categoria,
-				subcategoria,
 				descripcion,
 				montobs,
 				montousd,
@@ -114,7 +84,6 @@ export default function RegistroCreateScreen(props) {
 		setReferencia('');
 		setTipooperacion('');
 		setCategoria('');
-		setSubcategoria('');
 		setDescripcion('');
 		setMontobs('');
 		setMontousd('');
@@ -173,7 +142,7 @@ export default function RegistroCreateScreen(props) {
 		<div className='wrapper'>
 			<div className='titulo'>
 				<h1>Registrar Egreso</h1>
-				<Link to='/productlist' className='back-link producto'>
+				<Link to='/registrolist' className='back-link producto'>
 					volver a Registros
 				</Link>
 			</div>
