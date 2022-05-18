@@ -31,7 +31,7 @@ function HomeScreen() {
 								<FontAwesomeIcon icon={faTableList} />
 							</Link>
 							<Tooltip position='bottom' content='Calendario'>
-								<Link to={'/calendario'}>
+								<Link to={'/'}>
 									<FontAwesomeIcon icon={faCalendarAlt} />
 								</Link>
 							</Tooltip>

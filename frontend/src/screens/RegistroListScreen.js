@@ -43,19 +43,7 @@ export default function RegistroListScreen(props) {
 		if (busqueda === '') {
 			dispatch(listRegistros({ nombre: '', pageNumber: pageNumber }));
 		} else {
-			if (/\d/.test(escodigo)) {
-				dispatch(
-					listRegistros({
-						nombre: '',
-						codigo: busqueda,
-						pageNumber: pageNumber,
-					})
-				);
-				return;
-			}
-			dispatch(
-				listRegistros({ nombre: busqueda, codigo: '', pageNumber: pageNumber })
-			);
+			dispatch(listRegistros({ nombre: busqueda, pageNumber: pageNumber }));
 		}
 	}, [busqueda, dispatch, escodigo, pageNumber]);
 
@@ -72,7 +60,7 @@ export default function RegistroListScreen(props) {
 	const clearSearch = () => {
 		setBusqueda('');
 		setPalabra('');
-		navigate('/registrolist/pageNumber/1');
+		navigate('/registrolist');
 	};
 
 	useEffect(() => {
@@ -134,7 +122,7 @@ export default function RegistroListScreen(props) {
 	return (
 		<div>
 			<div className='row'>
-				<h1 className='margenes'>Egresos</h1>
+				<h1>Egresos</h1>
 				<div className='search-div'>
 					<input
 						type='text'
@@ -174,6 +162,7 @@ export default function RegistroListScreen(props) {
 							<tr>
 								<th className='hidden'>ID-Producto</th>
 								<th>Fecha</th>
+								<th>Beneficiario</th>
 								<th>Referencia</th>
 								<th>Tipo-Doc</th>
 								<th>Categoria</th>
@@ -193,6 +182,9 @@ export default function RegistroListScreen(props) {
 										{registro._id}
 									</td>
 									<td data-heading='Fecha'>{registro.fecha}</td>
+									<td data-heading='Beneficiario' title={registro.beneficiario}>
+										{registro.beneficiario}
+									</td>
 									<td data-heading='Referencia' title={registro.referencia}>
 										{registro.referencia}
 									</td>
@@ -235,26 +227,6 @@ export default function RegistroListScreen(props) {
 							))}
 						</tbody>
 					</table>
-					<div className='row center pagination'>
-						<button onClick={firstPage}>#1</button>
-						<button onClick={previousPages}>&#10096;</button>
-
-						{group.map((x) => (
-							<Link
-								className={
-									x + 1 === page ? 'active' : x + 1 > pages ? 'outta-range' : ''
-								}
-								key={x + 1}
-								to={`/registrolist/pageNumber/${x + 1}`}
-							>
-								{x + 1}
-							</Link>
-						))}
-						<button onClick={nextPages}>&#10097;</button>
-						<Tooltip position='top' content='Ultimo'>
-							<button onClick={lastPage}>{pages}</button>
-						</Tooltip>
-					</div>
 				</React.Fragment>
 			)}
 		</div>

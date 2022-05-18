@@ -21,14 +21,14 @@ import {
 } from '../constants/registroConstants';
 
 export const listRegistros =
-	({ pageNumber = '', nombre = '', categoria = '', codigo = '' }) =>
+	({ pageNumber = '', nombre = '', categoria = '' }) =>
 	async (dispatch) => {
 		dispatch({
 			type: REGISTRO_LIST_REQUEST,
 		});
 		try {
 			const { data } = await Axios.get(
-				`/api/registros?pageNumber=${pageNumber}&nombre=${nombre}&categoria=${categoria}&codigo=${codigo}`
+				`/api/registros?pageNumber=${pageNumber}&nombre=${nombre}&categoria=${categoria}`
 			);
 
 			dispatch({ type: REGISTRO_LIST_SUCCESS, payload: data });
@@ -70,7 +70,7 @@ export const createRegistro =
 	(
 		fecha,
 		referencia,
-		tipooperacion,
+		beneficiario,
 		tipodoc,
 		categoria,
 		descripcion,
@@ -81,6 +81,7 @@ export const createRegistro =
 	) =>
 	async (dispatch, getState) => {
 		dispatch({ type: REGISTRO_CREATE_REQUEST });
+		console.log(fecha, beneficiario, referencia, 'imageurl', imageurl);
 		const {
 			userSignin: { userInfo },
 		} = getState();
@@ -90,7 +91,7 @@ export const createRegistro =
 				{
 					fecha,
 					referencia,
-					tipooperacion,
+					beneficiario,
 					tipodoc,
 					categoria,
 					descripcion,

@@ -240,7 +240,7 @@ function App() {
 						<Route path='/' element={<HomeScreen />} exact></Route>
 					</Routes>
 				</main>
-				<footer className='row center'>DeModa 11mayo2022</footer>
+				<footer className='row center'>DeModa mayo2022</footer>
 			</div>
 		</BrowserRouter>
 	);

@@ -7,13 +7,15 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { REGISTRO_CREATE_RESET } from '../constants/registroConstants';
 import { selectTipoDoc } from '../constants/selectsData';
+import { format, parseISO } from 'date-fns';
+import camaraimg from '../camara.png';
 
 import { listProveedores } from '../actions/proveedorActions';
 
 export default function RegistroCreateScreen(props) {
-	const [fecha, setFecha] = useState('');
+	const [fecha, setFecha] = useState(format(new Date(), 'yyyy-MM-dd'));
 	const [referencia, setReferencia] = useState('');
-	const [tipooperacion, setTipooperacion] = useState('egreso');
+	const [beneficiario, setBeneficiario] = useState('');
 	const [tipodoc, setTipodoc] = useState('Factura');
 	const [categoria, setCategoria] = useState('');
 	const [descripcion, setDescripcion] = useState('');
@@ -60,7 +62,7 @@ export default function RegistroCreateScreen(props) {
 			createRegistro(
 				fecha,
 				referencia,
-				tipooperacion,
+				beneficiario,
 				tipodoc,
 				categoria,
 				descripcion,
@@ -80,15 +82,15 @@ export default function RegistroCreateScreen(props) {
 			});
 		}
 		dispatch({ type: REGISTRO_CREATE_RESET });
-		setFecha('');
+		setFecha(format(new Date(), 'yyyy-MM-dd'));
 		setReferencia('');
-		setTipooperacion('');
+		setBeneficiario('');
 		setCategoria('');
 		setDescripcion('');
 		setMontobs('');
 		setMontousd('');
 		setCambio('');
-		setImageurl('');
+		setImageurl(camaraimg);
 	}, [dispatch, registro]);
 
 	const uploadFileHandler = async (e) => {
@@ -136,14 +138,15 @@ export default function RegistroCreateScreen(props) {
 		'Tramites Varios',
 		'Sueldos',
 		'Equipos',
+		'Constitucion',
 	];
 
 	return (
 		<div className='wrapper'>
 			<div className='titulo'>
 				<h1>Registrar Egreso</h1>
-				<Link to='/registrolist' className='back-link producto'>
-					volver a Registros
+				<Link to='/registrolist' className='back-link'>
+					Listado
 				</Link>
 			</div>
 			<form
@@ -164,6 +167,18 @@ export default function RegistroCreateScreen(props) {
 									onChange={(e) => setFecha(e.target.value)}
 								></input>
 							</div>
+							<div>
+								<label htmlFor='beneficiario' id='label-beneficiario'>
+									Beneficiario
+								</label>
+								<input
+									id='beneficiario'
+									type='text'
+									placeholder='nombre'
+									value={beneficiario}
+									onChange={(e) => setBeneficiario(e.target.value)}
+								></input>
+							</div>
 
 							<div>
 								<label htmlFor='descripcion'>Descripcion</label>
@@ -173,26 +188,9 @@ export default function RegistroCreateScreen(props) {
 									type='text'
 									maxLength='100'
 									required
-									placeholder='breve descripcion del producto'
 									value={descripcion}
 									onChange={(e) => setDescripcion(e.target.value)}
 								></textarea>
-							</div>
-
-							<div>
-								<label className='small-label'>Tipo-Documento</label>
-								<select
-									className='inline-select producto'
-									value={tipodoc}
-									placeholder='selecionar'
-									onChange={(e) => setTipodoc(e.target.value)}
-								>
-									{selectTipoDoc.map((x) => (
-										<option key={x} value={x}>
-											{x}
-										</option>
-									))}
-								</select>
 							</div>
 						</div>
 
@@ -242,37 +240,50 @@ export default function RegistroCreateScreen(props) {
 									))}
 								</select>
 							</div>
+							<div>
+								<label className='small-label'>Tipo-Documento</label>
+								<select
+									className='inline-select producto'
+									value={tipodoc}
+									placeholder='selecionar'
+									onChange={(e) => setTipodoc(e.target.value)}
+								>
+									{selectTipoDoc.map((x) => (
+										<option key={x} value={x}>
+											{x}
+										</option>
+									))}
+								</select>
+							</div>
 						</div>
 
 						<div className='row-container imagen'>
-							<div id='div-tiny-image'>
-								<img src={imageurl} className='tiny-image' alt=' imagen' />
-							</div>
 							<div className='grupo-imagen'>
-								<div>
-									<input
-										type='file'
-										className='custom-file-input'
-										id='imageFile'
-										onChange={uploadFileHandler}
-									></input>
-									{loadingUpload && <LoadingBox></LoadingBox>}
-									{errorUpload &&
-										toast.error('No se puede subir Imagen', {
-											position: 'bottom-right',
-											autoClose: 1000,
-										})}
-								</div>
-								<div className='hidden'>
-									<input
-										id='imageurl'
-										className='cloudinary-url-input'
-										type='text'
-										value={imageurl}
-										onChange={(e) => setImageurl(e.target.value)}
-										disabled
-									></input>
-								</div>
+								<img src={imageurl} className='tiny-image' alt=' imagen' />
+								<input
+									type='file'
+									className='custom-file-input'
+									id='imageFile'
+									onChange={uploadFileHandler}
+								></input>
+								{loadingUpload && <LoadingBox></LoadingBox>}
+								{errorUpload &&
+									toast.error('No se puede subir Imagen', {
+										position: 'bottom-right',
+										autoClose: 1000,
+									})}
+							</div>
+							<div>
+								<label htmlFor='referencia' id='label-beneficiario'>
+									Referencia
+								</label>
+								<input
+									id='referencia'
+									type='text'
+									placeholder='referencia'
+									value={referencia}
+									onChange={(e) => setReferencia(e.target.value)}
+								></input>
 							</div>
 						</div>
 

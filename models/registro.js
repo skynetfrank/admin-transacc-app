@@ -3,8 +3,8 @@ import mongoose from 'mongoose';
 const registroSchema = new mongoose.Schema(
 	{
 		fecha: { type: Date },
+		beneficiario: { type: String },
 		referencia: { type: String },
-		tipooperacion: { type: String },
 		tipodoc: { type: String },
 		categoria: { type: String },
 		descripcion: { type: String },

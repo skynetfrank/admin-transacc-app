@@ -159,6 +159,10 @@ a:hover,
 	display: none;
 }
 
+.table-container__table--break-sm td.hidden {
+	display: none;
+}
+
 /* COMMONS */
 h1 {
 	font-size: 3rem;
@@ -278,7 +282,7 @@ button.no-margins {
 }
 
 button.color {
-	background-color: #2020a0;
+	background-color: #08a47d;
 	color: #fff;
 }
 
@@ -430,6 +434,7 @@ img.tiny-image {
 	height: 85px;
 	padding: 0px;
 	object-fit: cover;
+	border: 1px solid blue;
 }
 
 #div-tiny-image {
@@ -438,7 +443,6 @@ img.tiny-image {
 	border-radius: 5px;
 	color: #fff;
 	margin-right: 15px;
-	background-color: #2020a0;
 }
 
 /* Card */
@@ -602,17 +606,23 @@ img.tiny-image {
 }
 
 .form {
-	max-width: 40rem;
+	max-width: 50rem;
 	margin: 0 auto;
 }
+
 .form > div {
 	display: flex;
 	flex-direction: column;
 	margin: 1rem;
 }
 
+#montousd,
+#montobs {
+	width: 100px;
+}
+
 #form-producto {
-	max-width: 75rem;
+	max-width: 83rem;
 }
 
 .form.registro,
@@ -799,14 +809,15 @@ input::-webkit-inner-spin-button {
 }
 
 .table thead {
-	background-color: rgb(223, 148, 10);
+	background-color: #1de9b6;
 	font-size: 14px;
 	height: 30px;
+	color: black;
 }
 
 .table button {
-	margin: 0.3rem;
-	background-color: #2020a0;
+	margin: 1rem 1.5rem;
+	background-color: #14b18a;
 }
 td {
 	max-width: 200px;
@@ -1453,12 +1464,9 @@ input:-webkit-autofill:active {
 }
 
 .custom-file-input::before {
-	content: 'Cargar Imagen de este Egreso';
+	content: '';
+	background: transparent;
 	display: inline-block;
-	background: linear-gradient(to bottom, #f9f9f9, #e3e3e3);
-	border: 1px solid #999;
-	border-radius: 3px;
-	padding: 5px 8px;
 	outline: none;
 	white-space: nowrap;
 	-webkit-user-select: none;
@@ -1503,6 +1511,15 @@ input:-webkit-autofill:active {
 
 #descripcion {
 	width: 350px;
+	font-size: 1.6rem;
+}
+
+#beneficiario {
+	width: 230px;
+	margin-left: 10px;
+}
+#label-beneficiario {
+	margin-left: 10px;
 }
 
 #imageurl {
@@ -1525,8 +1542,14 @@ form.producto .row-title {
 }
 
 input[type='file' i] {
-	background-color: #2020a0;
+	background-color: transparent;
 	font-size: 12px;
+	width: 100px;
+	height: 100px;
+	outline: none;
+	border: none;
+	position: absolute;
+	top: 0;
 }
 
 .multiselect {
@@ -1541,6 +1564,7 @@ input[type='file' i] {
 .grupo-imagen {
 	display: flex;
 	flex-direction: column;
+	position: relative;
 }
 /* media query */
 
@@ -2108,15 +2132,12 @@ section {
 		margin-left: 0;
 	}
 
-	a.brand {
-		display: none;
-	}
-
 	.search-div > h1 {
 		display: none;
 	}
 
 	.search-div {
+		max-width: 340px;
 		margin: 15px 0;
 		justify-content: space-between;
 	}
@@ -2222,7 +2243,7 @@ section {
 	.table-container__table--break-sm tr {
 		display: block;
 		width: 340px;
-		margin: 10px;
+		margin-bottom: 20px;
 	}
 
 	.table-container__table--break-sm td {
@@ -2238,7 +2259,7 @@ section {
 	.table-container__table--break-sm td:last-child {
 		border-bottom: 2px solid black;
 		padding-top: 0;
-		height: 45px;
+		/*height: 45px; */
 	}
 	.table-container__table--break-sm td::before {
 		content: attr(data-heading);
@@ -2249,8 +2270,8 @@ section {
 		height: 100%;
 		display: flex;
 		align-items: center;
-		background-color: #2020a0;
-		color: #fff;
+		background-color: #1de9b6;
+		color: black;
 		font-size: 1.5rem;
 		padding: 0 5px;
 		justify-content: left;
@@ -2345,8 +2366,17 @@ section {
 		width: 100px;
 	}
 	.back-link {
-		top: 15px;
+		width: 60px;
 		padding: 10px;
+		position: static;
+	}
+
+	.titulo {
+		gap: 25px;
+	}
+
+	.titulo > h1 {
+		font-size: 2.5rem;
 	}
 
 	.back-link.producto {
@@ -2361,7 +2391,7 @@ section {
 		max-height: 35rem;
 	}
 	.card {
-		height: 300px;
+		height: 25rem;
 		width: 330px;
 	}
 	.status-line {
@@ -2433,8 +2463,18 @@ section {
 		width: 350px;
 	}
 
-	#form-producto input {
+	#form-producto input,
+	#form-producto textarea {
 		width: 90%;
+	}
+
+	#form-producto input[type='file' i] {
+		width: 60px;
+	}
+
+	#beneficiario,
+	#label-beneficiario {
+		margin-left: 0;
 	}
 
 	.form.producto .row-container {
@@ -2443,6 +2483,13 @@ section {
 	}
 	.form.producto .row-container div {
 		width: 100%;
+		margin-bottom: 10px;
+	}
+
+	button.primary {
+		width: 100%;
+		margin-top: 10px;
+		min-height: 40px;
 	}
 
 	.form.producto .row-container div select,
@@ -2486,6 +2533,11 @@ section {
 	}
 
 	.row.gapper {
-		row-gap: 9rem;
+		row-gap: 7rem;
+	}
+	h1 {
+		width: 100%;
+		text-align: center;
+		margin: 0;
 	}
 }

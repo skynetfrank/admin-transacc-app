@@ -13,27 +13,19 @@ registroRouter.get(
 		const page = Number(req.query.pageNumber) || 1;
 		const nombre = req.query.nombre || '';
 		const categoria = req.query.categoria || '';
-		const codigo = req.query.codigo || '';
-		//const tags = req.query.tags || '';
 
 		const nameFilter = nombre
-			? { nombre: { $regex: nombre, $options: 'i' } }
+			? { beneficiario: { $regex: nombre, $options: 'i' } }
 			: {};
-		//const tagsFilter = tags ? { tags: { $regex: tags, $options: 'i' } } : {};
+
 		const categoryFilter = categoria ? { categoria } : {};
-		const codigoFilter = codigo
-			? { codigo: { $regex: codigo, $options: 'i' } }
-			: {};
-		console.log('nameFilter', nameFilter, 'codigoFilter', codigoFilter);
 
 		const count = await Registro.countDocuments({
 			...nameFilter,
-			...codigoFilter,
 		});
 
 		const registros = await Registro.find({
 			...nameFilter,
-			...codigoFilter,
 		})
 			.skip(pageSize * (page - 1))
 			.limit(pageSize);
@@ -63,8 +55,8 @@ registroRouter.post(
 	expressAsyncHandler(async (req, res) => {
 		const registro = new Registro({
 			fecha: req.body.fecha,
+			beneficiario: req.body.beneficiario,
 			referencia: req.body.referencia,
-			tipooperacion: req.body.tipooperacion,
 			tipodoc: req.body.tipodoc,
 			categoria: req.body.categoria,
 			descripcion: req.body.descripcion,
@@ -78,6 +70,7 @@ registroRouter.post(
 		res.send({
 			_id: createdRegistro._id,
 			fecha: createdRegistro.fecha,
+			beneficiario: createdRegistro.beneficiario,
 			referencia: createdRegistro.referencia,
 			tipooperacion: createdRegistro.tipooperacion,
 			tipodoc: createdRegistro.tipodoc,
@@ -100,8 +93,8 @@ registroRouter.put(
 
 		if (registro) {
 			registro.fecha = req.body.fecha;
+			registro.beneficiario = req.body.beneficiario;
 			registro.referencia = req.body.referencia;
-			registro.tipooperacion = req.body.tipooperacion;
 			registro.tipodoc = req.body.tipodoc;
 			registro.categoria = req.body.categoria;
 			registro.descripcion = req.body.descripcion;
