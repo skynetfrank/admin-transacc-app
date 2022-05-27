@@ -13,6 +13,7 @@ import MessageBox from '../components/MessageBox';
 import { REGISTRO_DELETE_RESET } from '../constants/registroConstants';
 import { useNavigate } from 'react-router-dom';
 import Tooltip from '../components/Tooltip';
+import { format } from 'date-fns';
 
 export default function RegistroListScreen(props) {
 	const navigate = useNavigate();
@@ -162,6 +163,7 @@ export default function RegistroListScreen(props) {
 							<tr>
 								<th className='hidden'>ID-Producto</th>
 								<th>Fecha</th>
+								<th>Tipo</th>
 								<th>Beneficiario</th>
 								<th>Referencia</th>
 								<th>Tipo-Doc</th>
@@ -170,6 +172,8 @@ export default function RegistroListScreen(props) {
 								<th>Monto US$</th>
 								<th>Monto Bs.</th>
 								<th>Cambio</th>
+								<th>Status</th>
+								<th>Fecha Pago</th>
 								<th>imagen</th>
 
 								<th>Acciones</th>
@@ -181,7 +185,15 @@ export default function RegistroListScreen(props) {
 									<td className='hidden' data-heading='ID-REGISTRO'>
 										{registro._id}
 									</td>
-									<td data-heading='Fecha'>{registro.fecha}</td>
+									<td data-heading='Fecha'>
+										{format(new Date(registro.fecharegistro), 'yyyy-MM-dd')}
+									</td>
+									<td
+										data-heading='Tipo Registro'
+										title={registro.tiporegistro}
+									>
+										{registro.tiporegistro}
+									</td>
 									<td data-heading='Beneficiario' title={registro.beneficiario}>
 										{registro.beneficiario}
 									</td>
@@ -200,6 +212,12 @@ export default function RegistroListScreen(props) {
 
 									<td data-heading='Monto Bs.'>{registro.montobs}</td>
 									<td data-heading='Cambio'>{registro.cambio}</td>
+									<td data-heading='Status' title={registro.status}>
+										{registro.status}
+									</td>
+									<td data-heading='Fecha Pago' title={registro.fechapago}>
+										{registro.fechapago}
+									</td>
 									<td data-heading='Imagen'>
 										<img
 											className='tiny-image'

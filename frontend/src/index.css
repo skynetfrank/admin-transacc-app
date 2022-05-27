@@ -622,7 +622,7 @@ img.tiny-image {
 }
 
 #form-producto {
-	max-width: 83rem;
+	max-width: 93rem;
 }
 
 .form.registro,
@@ -677,6 +677,8 @@ img.tiny-image {
 	margin: 0.5rem;
 	flex-direction: row;
 	align-items: baseline;
+	flex-wrap: wrap;
+	gap: 1rem;
 }
 
 .form.producto > div > input {
@@ -1510,8 +1512,8 @@ input:-webkit-autofill:active {
 }
 
 #descripcion {
-	width: 350px;
 	font-size: 1.6rem;
+	width: 300px;
 }
 
 #beneficiario {
@@ -2123,6 +2125,53 @@ section {
 	width: 750px !important;
 }
 
+.row-container > .input-container,
+.detail-container > .input-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.input-container > label {
+	position: relative;
+}
+
+.row-container > .select-container,
+.detail-container > .select-container {
+	display: flex;
+	flex-direction: column;
+	margin: 0 5px;
+}
+
+.select-small {
+	padding: 0.3rem;
+	width: 85px;
+	height: 32px;
+	font-size: 1.6rem;
+	text-align: center;
+	border-radius: 5px;
+	outline: none;
+}
+
+.select-medium {
+	padding: 0.3rem;
+	width: 125px;
+	height: 32px;
+	font-size: 1.6rem;
+	text-align: center;
+	border-radius: 5px;
+	outline: none;
+}
+
+.select-large {
+	padding: 0.3rem;
+	width: 200px;
+	height: 32px;
+	font-size: 1.6rem;
+	text-align: center;
+	border-radius: 5px;
+	outline: none;
+}
+
 @media (max-width: 575px) {
 	main {
 		max-width: 375px;
@@ -2366,6 +2415,7 @@ section {
 		width: 100px;
 	}
 	.back-link {
+		display: none;
 		width: 60px;
 		padding: 10px;
 		position: static;

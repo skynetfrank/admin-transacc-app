@@ -68,20 +68,24 @@ export const detailsRegistro = (registroId) => async (dispatch) => {
 
 export const createRegistro =
 	(
-		fecha,
+		fecharegistro,
+		fechapago,
 		referencia,
 		beneficiario,
 		tipodoc,
+		tiporegistro,
 		categoria,
 		descripcion,
 		montobs,
 		montousd,
 		cambio,
+		nota,
+		status,
 		imageurl
 	) =>
 	async (dispatch, getState) => {
 		dispatch({ type: REGISTRO_CREATE_REQUEST });
-		console.log(fecha, beneficiario, referencia, 'imageurl', imageurl);
+
 		const {
 			userSignin: { userInfo },
 		} = getState();
@@ -89,15 +93,19 @@ export const createRegistro =
 			const { data } = await Axios.post(
 				'/api/registros/create',
 				{
-					fecha,
+					fecharegistro,
+					fechapago,
 					referencia,
 					beneficiario,
 					tipodoc,
+					tiporegistro,
 					categoria,
 					descripcion,
 					montobs,
 					montousd,
 					cambio,
+					nota,
+					status,
 					imageurl,
 				},
 				{

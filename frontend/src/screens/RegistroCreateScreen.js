@@ -6,22 +6,28 @@ import LoadingBox from '../components/LoadingBox';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { REGISTRO_CREATE_RESET } from '../constants/registroConstants';
-import { selectTipoDoc } from '../constants/selectsData';
+import { selectTipoDoc, selectTipoReg } from '../constants/selectsData';
 import { format, parseISO } from 'date-fns';
 import camaraimg from '../camara.png';
 
 import { listProveedores } from '../actions/proveedorActions';
 
 export default function RegistroCreateScreen(props) {
-	const [fecha, setFecha] = useState(format(new Date(), 'yyyy-MM-dd'));
+	const [fecharegistro, setFecharegistro] = useState(
+		format(new Date(), 'yyyy-MM-dd')
+	);
+	const [fechapago, setFechapago] = useState(format(new Date(), 'yyyy-MM-dd'));
 	const [referencia, setReferencia] = useState('');
 	const [beneficiario, setBeneficiario] = useState('');
-	const [tipodoc, setTipodoc] = useState('Factura');
+	const [tipodoc, setTipodoc] = useState('');
+	const [tiporegistro, setTiporegistro] = useState('');
 	const [categoria, setCategoria] = useState('');
 	const [descripcion, setDescripcion] = useState('');
 	const [montobs, setMontobs] = useState(0);
 	const [montousd, setMontousd] = useState(0);
 	const [cambio, setCambio] = useState(0);
+	const [nota, setNota] = useState('');
+	const [status, setStatus] = useState('');
 	const [imageurl, setImageurl] = useState(
 		'https://res.cloudinary.com/demodapagos/image/upload/v1651855004/pagos/pagosimg_z4whqb.jpg'
 	);
@@ -60,15 +66,19 @@ export default function RegistroCreateScreen(props) {
 
 		dispatch(
 			createRegistro(
-				fecha,
+				fecharegistro,
+				fechapago,
 				referencia,
 				beneficiario,
 				tipodoc,
+				tiporegistro,
 				categoria,
 				descripcion,
 				montobs,
 				montousd,
 				cambio,
+				nota,
+				status,
 				imageurl
 			)
 		);
@@ -82,7 +92,9 @@ export default function RegistroCreateScreen(props) {
 			});
 		}
 		dispatch({ type: REGISTRO_CREATE_RESET });
-		setFecha(format(new Date(), 'yyyy-MM-dd'));
+		setFecharegistro(format(new Date(), 'yyyy-MM-dd'));
+		setFechapago('');
+		setTiporegistro('');
 		setReferencia('');
 		setBeneficiario('');
 		setCategoria('');
@@ -139,7 +151,14 @@ export default function RegistroCreateScreen(props) {
 		'Sueldos',
 		'Equipos',
 		'Constitucion',
+		'Relaciones Publicas',
+		'Transporte',
+		'Mantenimiento',
+		'Repuestos',
+		'Servicios',
+		'Otros',
 	];
+	const selectStatus = [' ', 'Pagado', 'Pendiente', 'Anticipo'];
 
 	return (
 		<div className='wrapper'>
@@ -157,30 +176,78 @@ export default function RegistroCreateScreen(props) {
 				{
 					<React.Fragment key={99}>
 						<div className='row-container'>
-							<div>
+							<div className='input-container'>
 								<label htmlFor='fecha'>Fecha</label>
 								<input
 									id='fecha'
 									type='date'
-									value={fecha}
+									value={fecharegistro}
 									required
-									onChange={(e) => setFecha(e.target.value)}
+									onChange={(e) => setFecharegistro(e.target.value)}
 								></input>
 							</div>
-							<div>
-								<label htmlFor='beneficiario' id='label-beneficiario'>
-									Beneficiario
-								</label>
+							<div className='select-container'>
+								<label className='small-label'>Tipo-Registro</label>
+								<select
+									className='select-small'
+									value={tiporegistro}
+									required
+									placeholder='seleccionar'
+									onChange={(e) => setTiporegistro(e.target.value)}
+								>
+									{selectTipoReg.map((x) => (
+										<option key={x} value={x}>
+											{x}
+										</option>
+									))}
+								</select>
+							</div>
+							<div className='select-container'>
+								<label className='small-label'>Tipo-Documento</label>
+								<select
+									className='select-medium'
+									required
+									value={tipodoc}
+									placeholder='seleccionar'
+									onChange={(e) => setTipodoc(e.target.value)}
+								>
+									{selectTipoDoc.map((x) => (
+										<option key={x} value={x}>
+											{x}
+										</option>
+									))}
+								</select>
+							</div>
+							<div className='select-container'>
+								<label className='small-label'>Categoria</label>
+								<select
+									className='select-large'
+									required
+									value={categoria}
+									onChange={(e) => setCategoria(e.target.value)}
+								>
+									{selectCategorias.map((x) => (
+										<option key={x} value={x}>
+											{x}
+										</option>
+									))}
+								</select>
+							</div>
+							<div className='input-container'>
+								<label htmlFor='beneficiario'>Beneficiario</label>
 								<input
 									id='beneficiario'
 									type='text'
 									placeholder='nombre'
 									value={beneficiario}
+									required
 									onChange={(e) => setBeneficiario(e.target.value)}
 								></input>
 							</div>
+						</div>
 
-							<div>
+						<div className='row-container'>
+							<div className='input-container'>
 								<label htmlFor='descripcion'>Descripcion</label>
 								<textarea
 									id='descripcion'
@@ -192,10 +259,17 @@ export default function RegistroCreateScreen(props) {
 									onChange={(e) => setDescripcion(e.target.value)}
 								></textarea>
 							</div>
-						</div>
-
-						<div className='row-container'>
-							<div>
+							<div className='input-container'>
+								<label htmlFor='referencia'>Referencia</label>
+								<input
+									type='text'
+									required
+									placeholder='referencia'
+									value={referencia}
+									onChange={(e) => setReferencia(e.target.value)}
+								></input>
+							</div>
+							<div className='input-container'>
 								<label htmlFor='montousd'>Monto US$</label>
 								<input
 									id='montousd'
@@ -205,18 +279,17 @@ export default function RegistroCreateScreen(props) {
 									onChange={(e) => getCosto(e.target.value)}
 								></input>
 							</div>
-							<div>
+							<div className='input-container'>
 								<label htmlFor='montobs'>Monto Bs.</label>
 								<input
 									id='montobs'
 									type='number'
 									value={montobs}
-									required
 									onChange={(e) => setMontobs(e.target.value)}
 								></input>
 							</div>
 
-							<div>
+							<div className='input-container'>
 								<label htmlFor='cambio'>cambio$</label>
 								<input
 									id='cambio'
@@ -226,38 +299,44 @@ export default function RegistroCreateScreen(props) {
 									onChange={(e) => setCambio(e.target.value)}
 								></input>
 							</div>
-							<div>
-								<label className='small-label'>Categoria</label>
-								<select
-									className='inline-select producto categoria'
-									value={categoria}
-									onChange={(e) => setCategoria(e.target.value)}
-								>
-									{selectCategorias.map((x) => (
-										<option key={x} value={x}>
-											{x}
-										</option>
-									))}
-								</select>
-							</div>
-							<div>
-								<label className='small-label'>Tipo-Documento</label>
-								<select
-									className='inline-select producto'
-									value={tipodoc}
-									placeholder='selecionar'
-									onChange={(e) => setTipodoc(e.target.value)}
-								>
-									{selectTipoDoc.map((x) => (
-										<option key={x} value={x}>
-											{x}
-										</option>
-									))}
-								</select>
-							</div>
 						</div>
 
 						<div className='row-container imagen'>
+							<div className='select-container'>
+								<label className='small-label'>Status</label>
+								<select
+									className='select-small'
+									value={status}
+									required
+									placeholder='seleccionar'
+									onChange={(e) => setStatus(e.target.value)}
+								>
+									{selectStatus.map((x) => (
+										<option key={x} value={x}>
+											{x}
+										</option>
+									))}
+								</select>
+							</div>
+							<div className='input-container'>
+								<label htmlFor='fecha'>Fecha de Pago</label>
+								<input
+									id='fechapago'
+									type='date'
+									value={fechapago}
+									onChange={(e) => setFechapago(e.target.value)}
+								></input>
+							</div>
+							<div className='input-container'>
+								<label htmlFor='nota'>Nota</label>
+								<input
+									id='nota'
+									type='text'
+									placeholder='nota'
+									value={nota}
+									onChange={(e) => setNota(e.target.value)}
+								></input>
+							</div>
 							<div className='grupo-imagen'>
 								<img src={imageurl} className='tiny-image' alt=' imagen' />
 								<input
@@ -272,18 +351,6 @@ export default function RegistroCreateScreen(props) {
 										position: 'bottom-right',
 										autoClose: 1000,
 									})}
-							</div>
-							<div>
-								<label htmlFor='referencia' id='label-beneficiario'>
-									Referencia
-								</label>
-								<input
-									id='referencia'
-									type='text'
-									placeholder='referencia'
-									value={referencia}
-									onChange={(e) => setReferencia(e.target.value)}
-								></input>
 							</div>
 						</div>
 

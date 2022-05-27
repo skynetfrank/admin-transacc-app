@@ -54,30 +54,38 @@ registroRouter.post(
 	isAdmin,
 	expressAsyncHandler(async (req, res) => {
 		const registro = new Registro({
-			fecha: req.body.fecha,
+			fecharegistro: req.body.fecharegistro,
+			fechapago: req.body.fecha,
 			beneficiario: req.body.beneficiario,
 			referencia: req.body.referencia,
 			tipodoc: req.body.tipodoc,
+			tiporegistro: req.body.tiporegistro,
 			categoria: req.body.categoria,
 			descripcion: req.body.descripcion,
 			montobs: req.body.montobs,
 			montousd: req.body.montousd,
 			cambio: req.body.cambio,
+			nota: req.body.nota,
+			status: req.body.status,
 			imageurl: req.body.imageurl,
 		});
 		const createdRegistro = await registro.save();
 
 		res.send({
 			_id: createdRegistro._id,
-			fecha: createdRegistro.fecha,
+			fecharegistro: createdRegistro.fecharegistro,
+			fechapago: createdRegistro.fechapago,
 			beneficiario: createdRegistro.beneficiario,
 			referencia: createdRegistro.referencia,
 			tipooperacion: createdRegistro.tipooperacion,
 			tipodoc: createdRegistro.tipodoc,
+			tiporegistro: createdRegistro.tiporegistro,
 			categoria: createdRegistro.categoria,
 			montobs: createdRegistro.montobs,
 			montousd: createdRegistro.montousd,
 			cambio: createdRegistro.cambio,
+			nota: createdRegistro.nota,
+			status: createdRegistro.status,
 			imageurl: createdRegistro.imageurl,
 		});
 	})
@@ -92,15 +100,19 @@ registroRouter.put(
 		const registro = await Registro.findById(registroId);
 
 		if (registro) {
-			registro.fecha = req.body.fecha;
+			registro.fecharegistro = req.body.fecharegistro;
+			registro.fechapago = req.body.fechapago;
 			registro.beneficiario = req.body.beneficiario;
 			registro.referencia = req.body.referencia;
 			registro.tipodoc = req.body.tipodoc;
+			registro.tiporegistro = req.body.tiporegistro;
 			registro.categoria = req.body.categoria;
 			registro.descripcion = req.body.descripcion;
 			registro.montobs = req.body.montobs;
 			registro.montousd = req.body.montousd;
 			registro.cambio = req.body.cambio;
+			registro.nota = req.body.nota;
+			registro.status = req.body.status;
 			registro.imageurl = req.body.imageurl;
 
 			const updatedRegistro = await registro.save();

@@ -7,7 +7,9 @@ export const selectTipoDoc = [
 	'Nota Credito',
 	'Nota Entrega',
 	'Nota Almacen',
+	'Sin Documento',
 ];
+export const selectTipoReg = [' ', 'Egreso', 'Ingreso', 'Ajuste', 'Otro'];
 
 export const marcas = [
 	' ',
